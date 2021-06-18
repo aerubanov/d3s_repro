@@ -1,6 +1,7 @@
 from typing import Callable, List
 import os
 import pandas as pd
+import glob
 
 from src.datasets.base import BaseDataset
 
@@ -42,4 +43,19 @@ class VosDataset(BaseDataset):
             folder = name.split(-)[0]
             fr_path = os.path.join(self.path, 'JPEGImages', name)
             msk_path = os.path.join(self.path, 'Annotations', name)
+            fr_names_dict[name] = sorted([fname for fname in glob.glob(os.path.join(fr_path, '*.jpg'))])
+            msk_names_dict[name] = sorted([fname for fname in glob.glob(os.path.join(msk_path, '*.png'))])
+        return fr_names_dict, msk_names_dict
+
+    def get_sequence_info(self, seq_id):
+        name = self.sequence_list[seq_id]
+        split = name.split('-')[0]
+        dir_name, id = split[0], split[1]
+
+        path = os.path.join(self.path, 'boxes', dir_name)
+        anno_file = os.path.join(path, "groundtruth-%s.txt" % obj_id)
+        gt = pandas.read_csv(anno_file, delimiter=',', header=None, dtype=np.float32, na_filter=False, low_memory=False).values
+        anno = torch.tensor(gt)
+        target_visible = (anno[:, 0] > -1) & (anno[:, 1] > -1) & (anno[:, 2] > -1) & (anno[:, 3] > -1)
+        return anno, target_visible
 
