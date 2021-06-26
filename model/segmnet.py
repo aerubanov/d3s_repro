@@ -6,6 +6,7 @@ import torch
 from model.layers import conv, conv_no_relu
 
 
+
 class SegmNet(nn.Module):
     def __init__(
             self,
@@ -16,6 +17,7 @@ class SegmNet(nn.Module):
             topk_pos: int = 3,
             topk_neg: int = 3,
             ):
+
         super().__init__()
 
         self.segment0 = conv(segm_input_dim[3], segm_dim[0], kernel_size=1, padding=0)
