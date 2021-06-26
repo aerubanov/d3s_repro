@@ -1,18 +1,21 @@
 from typing import Tuple
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
+
+from model.layers import conv, conv_no_relu
 
 
 class SegmNet(nn.Module):
     def __init__(
             self,
-            segm_input_dim: Tuple[int] = (128, 256),
-            segm_inter_dim: Tuple[int] = (256, 256),
-            segm_dim: Tuple[int] = (64, 64),
+            segm_input_dim: Tuple[int, int, int, int] = (64, 64, 128, 256),
+            segm_inter_dim: Tuple[int, int, int, int] = (4, 16, 32, 64),
+            segm_dim: Tuple[int, int] = (64, 64),
             mixer_channels: int = 2,
             topk_pos: int = 3,
             topk_neg: int = 3,
-            )
+            ):
         super().__init__()
 
         self.segment0 = conv(segm_input_dim[3], segm_dim[0], kernel_size=1, padding=0)
@@ -49,7 +52,7 @@ class SegmNet(nn.Module):
         f_train = self.segment1(self.segment0(train_feat[3]))
 
         # reshape mask to the feature size
-        mask_pos = F.interpolate(mask_train[0],
+        mask_pos = F.interpolate(mask[0],
                 size=(f_train.shape[-2], f_train.shape[-1]))
         mask_neg = 1 - mask_pos
 
