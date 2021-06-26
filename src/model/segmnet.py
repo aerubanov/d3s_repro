@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-from model.layers import conv, conv_no_relu
+from src.model.layers import conv, conv_no_relu
 
 
 
