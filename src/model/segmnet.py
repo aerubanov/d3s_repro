@@ -60,6 +60,37 @@ class SegmNet(nn.Module):
 
         pred_pos, pred_neg = self.gim(f_test, f_train,
                 mask_pos, mask_neg)
+        pred_ = torch.cat(
+                (torch.unsqueeze(pred_pos, -1),
+                    torch.unsqueeze(pred_neg, -1)),
+                dim=-1,
+                )
+        pred_sm = F.softmax(pred_, dim=-1)
+
+        if test_dist is not None:
+            # distance map is give - resize for mixer
+            dist = F.interpolate(test_dist[0], size=(f_train.shape[-2], f_train.shape[-1]))
+            # concatenate inputs for mixer
+            # softmaxed segmentation, positive segmentation and distance map
+            segm_layers = torch.cat((torch.unsqueeze(pred_sm[:, :, :, 0], dim=1),
+                                     torch.unsqueeze(pred_pos, dim=1),
+                                     dist), dim=1)
+        else:
+            segm_layers = torch.cat(
+                    (torch.unsqueeze(pred_sm[:, :, :, 0], dim=1),
+                        torch.unsqueeze(pred_pos, dim=1)),
+                    dim=1,
+                    )
+
+        out = self.mixer(segm_layers)
+        out = self.s3(F.upsample(out, scale_factor=2))
+
+        out = self.post2(F.upsample(self.f2(f_test[2]) + self.s2(out), scale_factor=2))
+        out = self.post1(F.upsample(self.f1(f_test[1]) + self.s1(out), scale_factor=2))
+        out = self.post0(F.upsample(self.f0(f_test[0]) + self.s0(out), scale_factor=2))
+
+        return out
+
 
     def gim(self, f_test, f_train, mask_pos, mask_neg):
         # Normalize features to have L2 norm equal 1
