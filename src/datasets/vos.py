@@ -65,11 +65,10 @@ class VosDataset(BaseDataset):
 
     def get_sequence_info(self, seq_id):
         name = self.sequence_list[seq_id]
-        split = name.split('-')[0]
+        split = name.split('-')
         dir_name, obj_id = split[0], split[1]
 
-        path = os.path.join(self.path, 'boxes', dir_name)
-
+        path = os.path.join(self.path, 'rectangles', dir_name)
         anno = self._anno(path, obj_id)
         target_visible = (anno[:, 0] > -1) & (anno[:, 1] > -1) & (anno[:, 2] > -1) & (anno[:, 3] > -1)
         return anno, target_visible

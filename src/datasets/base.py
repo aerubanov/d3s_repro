@@ -11,7 +11,7 @@ class BaseDataset(torch.utils.data.Dataset, ABC):
         self.sequence_list = []
 
     def __len__(self):
-        return len(sequence_list)
+        return len(self.sequence_list)
 
     @property
     def is_video_sequence(self):
