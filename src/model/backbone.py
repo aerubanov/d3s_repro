@@ -103,16 +103,10 @@ class ResNet(nn.Module):
         raise ValueError('output_layer is wrong.')
 
 
-def resnet50(output_layers=None, pretrained=False):
+def resnet50(pretrained=False):
     """Constructs a ResNet-50 model.
     """
-
-    if output_layers is None:
-        output_layers = ['default']
-    else:
-        for l in output_layers:
-            if l not in ['conv1', 'layer1', 'layer2', 'layer3', 'layer4', 'fc']:
-                raise ValueError('Unknown layer: {}'.format(l))
+    output_layers = ['default']
 
     model = ResNet(Bottleneck, [3, 4, 6, 3], output_layers)
     if pretrained:
