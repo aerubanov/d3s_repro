@@ -98,7 +98,7 @@ def torch_load_legacy(path):
     """Load network with legacy environment."""
 
     # Setup legacy env (for older networks)
-    _setup_legacy_env()
+    #_setup_legacy_env()
 
     # Load network
     checkpoint_dict = torch.load(path)
@@ -113,8 +113,8 @@ def _setup_legacy_env():
     importlib.import_module('src')
     sys.modules['dlframework'] = sys.modules['src']
     sys.modules['dlframework.common'] = sys.modules['src']
-    for m in ('model_constructor', 'stats', 'settings', 'local'):
-        importlib.import_module('ltr.admin.'+m)
+    for m in ('model_constructor', 'utils.stats', 'settings', 'local'):
+        importlib.import_module('src' + m)
         sys.modules['dlframework.common.utils.'+m] = sys.modules['ltr.admin.'+m]
 
 
