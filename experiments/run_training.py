@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms
 import cv2 as cv
+import multiprocessing
+import torch
 
 from src.datasets.vos import VosDataset
 from src.data.loader import LTRLoader
@@ -20,15 +22,15 @@ class Settings:
         self.set_default()
 
     def set_default(self):
-        self.use_gpu = False
+        self.use_gpu = True
 
 
 def run(settings):
     # Most common settings are assigned in the settings struct
     settings.description = 'SegmentationNet with default settings.'
-    settings.print_interval = 1  # How often to print loss and other info
+    settings.print_interval = 50  # How often to print loss and other info
     settings.batch_size = 64  # Batch size
-    settings.num_workers = 1  # Number of workers for image loading
+    settings.num_workers = 8  # Number of workers for image loading
     settings.normalize_mean = [0.485, 0.456, 0.406]  # Normalize mean (default pytorch ImageNet values)
     settings.normalize_std = [0.229, 0.224, 0.225]  # Normalize std (default pytorch ImageNet values)
     settings.search_area_factor = 4.0  # Image patch size relative to target size
@@ -153,9 +155,14 @@ def run(settings):
 
 
 if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn', force=True)
     settings = Settings()
     settings.project_path = ''
     settings.images_dir = os.path.join(settings.project_path, 'images')
 
     cv.setNumThreads(0)
+    print(torch.cuda.is_available())
+    dev = torch.cuda.current_device()
+    print(torch.cuda.device(dev))
+    print(torch.cuda.get_device_name(dev))
     run(settings)

@@ -73,7 +73,6 @@ class LTRTrainer(BaseTrainer):
                 self.cycle_dataset(loader)
 
         self._stats_new_epoch()
-        self._write_tensorboard()
 
     def _init_timing(self):
         self.num_frames = 0
