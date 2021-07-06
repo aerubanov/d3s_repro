@@ -95,7 +95,7 @@ def parameters():
 
     params.use_segmentation = True
 
-    params.segm_net_path = '/home/anatoly/HDD/DS_Projects/d3s_repro/wdir/checkpoints/D3S_ep0040.pth.tar'
+    params.segm_net_path = '/home/anatoly/HDD/Projects/d3s_repro/wdir/checkpoints'
     params.segm_use_dist = True
     params.segm_normalize_mean = [0.485, 0.456, 0.406]
     params.segm_normalize_std = [0.229, 0.224, 0.225]

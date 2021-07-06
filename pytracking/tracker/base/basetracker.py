@@ -264,7 +264,7 @@ class BaseTracker:
         if hasattr(self, 'gt_state') and False:
             gt_state = self.gt_state
             rect = patches.Rectangle((gt_state[0], gt_state[1]), gt_state[2], gt_state[3], linewidth=1, edgecolor='g',
-                                     facecolor='none')
+                    facecolor='none')
             self.ax.add_patch(rect)
         self.ax.set_axis_off()
         self.ax.axis('equal')

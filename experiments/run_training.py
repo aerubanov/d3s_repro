@@ -14,15 +14,7 @@ from src.utils.trainer import LTRTrainer
 import src.data.transforms as dltransforms
 from src.datasets.image_loader import opencv_loader
 import src.actors as actors
-
-
-class Settings:
-    """ Training settings, e.g. the paths to datasets and networks."""
-    def __init__(self):
-        self.set_default()
-
-    def set_default(self):
-        self.use_gpu = True
+from src.utils.settings.import settings
 
 
 def run(settings):
@@ -151,7 +143,7 @@ def run(settings):
     trainer = LTRTrainer(actor, [loader_train, loader_val], optimizer, settings, lr_scheduler)
 
     # Run training (set fail_safe=False if you are debugging)
-    trainer.train(40, load_latest=True, fail_safe=False)
+    trainer.train(1, load_latest=True, fail_safe=False)
 
 
 if __name__ == '__main__':

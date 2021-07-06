@@ -174,6 +174,10 @@ class TensorList(list):
     def _iterable(a):
         return isinstance(a, (TensorList, list))
 
+    def list(self):
+        return list(self)
+
+
 
 
 def tensor_operation(op):

@@ -44,7 +44,7 @@ class ResNet18m1(MultiFeatureBase):
 
         self.mean = torch.Tensor([0.485, 0.456, 0.406]).view(1,-1,1,1)
         self.std = torch.Tensor([0.229, 0.224, 0.225]).view(1,-1,1,1)
-
+        
         self.net = resnet18_vggmconv1(self.output_layers, path=net_path_full)
         if self.use_gpu:
             self.net.cuda()
@@ -178,6 +178,7 @@ class ATOMResNet50(MultiFeatureBase):
         #     net_path_full = os.path.join(env_settings().network_path, self.net_path)
 
         # self.net, _ = load_network(net_path_full, backbone_pretrained=False)
+        print(self.output_layers)
         self.net = backbone_resnet.resnet50(output_layers=self.output_layers, pretrained=True)
 
         if self.use_gpu:

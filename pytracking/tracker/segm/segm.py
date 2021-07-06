@@ -798,6 +798,7 @@ class Segm(BaseTracker):
                                                                       output_sz=self.params.segm_output_sz, pad_val=0)
 
         # network was renamed therefore we need to specify constructor_module and constructor_fun_name
+        print(self.params.segm_net_path)
         segm_net, _ = load_network(self.params.segm_net_path, backbone_pretrained=False,
                                    constructor_module='ltr.models.segm.segm',
                                    constructor_fun_name='segm_resnet50')

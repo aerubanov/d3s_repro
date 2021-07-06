@@ -32,7 +32,7 @@ class VOTDatasetClass(BaseDataset):
 
         end_frame = ground_truth_rect.shape[0]
 
-        frames = ['{base_path}/{sequence_path}/{frame:0{nz}}.{ext}'.format(base_path=self.base_path,
+        frames = ['{base_path}/{sequence_path}/color/{frame:0{nz}}.{ext}'.format(base_path=self.base_path,
                   sequence_path=sequence_path, frame=frame_num, nz=nz, ext=ext)
                   for frame_num in range(start_frame, end_frame+1)]
 
