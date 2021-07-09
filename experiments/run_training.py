@@ -14,7 +14,7 @@ from src.utils.trainer import LTRTrainer
 import src.data.transforms as dltransforms
 from src.datasets.image_loader import opencv_loader
 import src.actors as actors
-from src.utils.settings.import settings
+from src.utils.settings import Settings
 
 
 def run(settings):
@@ -53,7 +53,7 @@ def run(settings):
 
     # Validation datasets
     vos_val = VosDataset(
-            path='DATA/youtube-vos/valid/',
+            path='DATA/youtube-vos/train/',
             img_loader=opencv_loader,
             split='valid')
 
@@ -143,7 +143,7 @@ def run(settings):
     trainer = LTRTrainer(actor, [loader_train, loader_val], optimizer, settings, lr_scheduler)
 
     # Run training (set fail_safe=False if you are debugging)
-    trainer.train(1, load_latest=True, fail_safe=False)
+    trainer.train(40, load_latest=True, fail_safe=False)
 
 
 if __name__ == '__main__':

@@ -800,7 +800,7 @@ class Segm(BaseTracker):
         # network was renamed therefore we need to specify constructor_module and constructor_fun_name
         print(self.params.segm_net_path)
         segm_net, _ = load_network(self.params.segm_net_path, backbone_pretrained=False,
-                                   constructor_module='ltr.models.segm.segm',
+                                   constructor_module='src.model.d3s',
                                    constructor_fun_name='segm_resnet50')
 
         if self.params.use_gpu:

@@ -26,11 +26,10 @@ def run_sequence(seq: Sequence, tracker: Tracker, debug=False):
             print(e)
             return
 
-    tracked_bb = np.array(tracked_bb).astype(float)
     exec_times = np.array(exec_times).astype(float)
-
     print('FPS: {}'.format(len(exec_times) / exec_times.sum()))
     if not debug:
+        tracked_bb = np.array(tracked_bb).astype(float)
         np.savetxt(results_path, tracked_bb, delimiter=',', fmt='%f')
         np.savetxt(times_path, exec_times, delimiter='\t', fmt='%f')
 

@@ -8,7 +8,7 @@ def parameters():
 
     # These are usually set from outside
     params.debug = 1                        # Debug level
-    params.visualization = True            # Do visualization
+    params.visualization = False           # Do visualization
 
     # Use GPU or not (IoUNet requires this to be True)
     params.use_gpu = True
@@ -95,7 +95,7 @@ def parameters():
 
     params.use_segmentation = True
 
-    params.segm_net_path = '/home/anatoly/HDD/Projects/d3s_repro/wdir/checkpoints'
+    params.segm_net_path = 'wdir/checkpoints'
     params.segm_use_dist = True
     params.segm_normalize_mean = [0.485, 0.456, 0.406]
     params.segm_normalize_std = [0.229, 0.224, 0.225]

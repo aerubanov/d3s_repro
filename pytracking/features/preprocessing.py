@@ -11,9 +11,9 @@ def torch_to_numpy(a: torch.Tensor):
     return a.squeeze(0).permute(1,2,0).numpy()
 
 
+
 def sample_patch(im: torch.Tensor, pos: torch.Tensor, sample_sz: torch.Tensor, output_sz: torch.Tensor = None):
     """Sample an image patch.
-
     args:
         im: Image
         pos: center position of crop
@@ -45,8 +45,8 @@ def sample_patch(im: torch.Tensor, pos: torch.Tensor, sample_sz: torch.Tensor, o
     szl = torch.max(sz.round(), torch.Tensor([2])).long()
 
     # Extract top and bottom coordinates
-    tl = posl - (szl - 1)//2
-    br = posl + szl//2
+    tl = torch.round(posl - (szl - 1)/2).int()
+    br = torch.round(posl + szl/2).int()
 
     # Get image patch
     im_patch = F.pad(im2, (-tl[1].item(), br[1].item() - im2.shape[3] + 1, -tl[0].item(), br[0].item() - im2.shape[2] + 1), 'replicate')

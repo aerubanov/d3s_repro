@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 import importlib
 
-import experiments.run_training
 
 def load_network(
         network_dir=None,
@@ -111,7 +110,6 @@ def _setup_legacy_env():
     importlib.import_module('src')
     sys.modules['dlframework'] = sys.modules['src']
     sys.modules['dlframework.common'] = sys.modules['src']
-    print(sys.modules)
     for m in ('src.model.model_constructor', 'src.utils.stats',
             'src.utils.settings',):
         importlib.import_module(m)

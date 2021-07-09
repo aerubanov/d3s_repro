@@ -1,6 +1,6 @@
 import matplotlib
 
-matplotlib.use('TkAgg')
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import cv2 as cv
@@ -36,9 +36,9 @@ class BaseTracker:
         init_time = getattr(self, 'time', time.time() - start_time)
         times.append(init_time)
 
-        if self.params.visualization:
-            self.init_visualization()
-            self.visualize(image, sequence.init_state)
+        # if self.params.visualization:
+        #    self.init_visualization()
+        #    self.visualize(image, sequence.init_state)
 
         # Track
         tracked_bb = [sequence.init_state]
@@ -51,8 +51,8 @@ class BaseTracker:
 
             tracked_bb.append(state)
 
-            if self.params.visualization:
-                self.visualize(image, state)
+            # if self.params.visualization:
+            #    self.visualize(image, state)
 
         return tracked_bb, times
 
